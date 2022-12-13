@@ -1,3 +1,3 @@
-# Cpp - tp4
+# Cpp - tp3
 
-TP4 : Manipulation des images PGM
+TP3 : Constructeurs, destructeurs et POO
