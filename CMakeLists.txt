@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
-project(image)
+project(construct)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(image main.cpp PGM.h PGM.cpp)
+add_executable(construct main.cpp Perso.h Perso.cpp Weapon.cpp)

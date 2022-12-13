@@ -1,16 +1,21 @@
-#include "PGM.h"
+#include "Perso.h"
+#include <iostream>
+
 
 int main() {
 
-    PGM pgm;
+    Weapon* weapon = new Weapon();
 
-    pgm.lectureFichier("lena.pgm");
+    Perso* p1 = new Perso(10);
 
-    pgm.flue(120, 200, 10);
+    Perso* p2 = new Perso(weapon);
 
-    pgm.ecrireFichier("new.pgm");
+    p2->display();
 
-    //pgm.ecrireFichier("test.pgm");
+    std::cout << Perso::nbPerso << std::endl;
+
+    delete p1;
+    delete p2;
 
     return 0;
 }
