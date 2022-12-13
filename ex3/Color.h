@@ -1,29 +1,30 @@
 #ifndef CLASS_COLOR_H
 #define CLASS_COLOR_H
 
+
 #include <iostream>
 
 using namespace std;
 
 namespace Color {
     enum Code {
-        FG_BLACK          = 30,
+        FB_BLACK          = 30,
         FG_RED            = 31,
         FG_GREEN          = 32,
-        FG_YELLOW         = 33,
+        FB_YELLOW         = 33,
         FG_BLUE           = 34,
-        FG_MAGENTA        = 35,
-        FG_CYAN           = 36,
+        FB_MAGENTA        = 35,
+        FB_CYAN           = 36,
         FG_WHITE          = 37,
         FG_DEFAULT        = 39,
-        FG_BRIGHT_BLACK   = 90,
-        FG_BRIGHT_RED     = 91,
-        FG_BRIGHT_GREEN   = 92,
-        FG_BRIGHT_YELLOW  = 93,
-        FG_BRIGHT_BLUE    = 94,
-        FG_BRIGHT_MAGENTA = 95,
-        FG_BRIGHT_CYAN    = 96,
-        FG_BRIGHT_WHITE   = 97,
+        FB_BRIGHT_BLACK   = 90,
+        FB_BRIGHT_RED     = 91,
+        FB_BRIGHT_GREEN   = 92,
+        FB_BRIGHT_YELLOW  = 93,
+        FB_BRIGHT_BLUE    = 94,
+        FB_BRIGHT_MAGENTA = 95,
+        FB_BRIGHT_CYAN    = 96,
+        FB_BRIGHT_WHITE   = 97,
         BG_BLACK          = 40,
         BG_RED            = 41,
         BG_GREEN          = 42,

@@ -1,3 +1,3 @@
-# Cpp - tp3
+# Cpp - tp2
 
-TP3 : Constructeurs, destructeurs et POO
+TP2 : Création des classes en C++
