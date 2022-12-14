@@ -16,7 +16,7 @@ int PGM::getLargeur() const {
 }
 
 void PGM::setLargeur(int largeur) {
-    PGM::largeur = largeur;
+    this->largeur = largeur;
 }
 
 int PGM::getHauteur() const {
@@ -24,7 +24,7 @@ int PGM::getHauteur() const {
 }
 
 void PGM::setHauteur(int hauteur) {
-    PGM::hauteur = hauteur;
+    this->hauteur = hauteur;
 }
 
 int PGM::getValeurMax() const {
@@ -32,7 +32,7 @@ int PGM::getValeurMax() const {
 }
 
 void PGM::setValeurMax(int valeurMax) {
-    PGM::valeurMax = valeurMax;
+    this->valeurMax = valeurMax;
 }
 
 int **PGM::getData() const {
@@ -40,7 +40,7 @@ int **PGM::getData() const {
 }
 
 void PGM::setData(int **data) {
-    PGM::data = data;
+    this->data = data;
 }
 
 void PGM::creeImage(int minpx, int maxpx) {
@@ -67,7 +67,7 @@ int PGM::getValeurMin() const {
 }
 
 void PGM::setValeurMin(int valeurMin) {
-    PGM::valeurMin = valeurMin;
+    this->valeurMin = valeurMin;
 }
 
 void PGM::initImage() {
@@ -96,18 +96,18 @@ PGM::PGM(const PGM &pgm) {
     valeurMax = pgm.valeurMax;
     valeurMin = pgm.valeurMin;
     initImage();
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            data[i][j] = pgm.data[i][j];
+    for (int y = 0; y < getHauteur(); y++) {
+        for (int x = 0; x < getLargeur(); x++) {
+            setPixel(x, y, pgm.data[y][x]);
         }
     }
     nbImage++;
 }
 
 void PGM::afficherImage() {
-    for (int i = 0 ; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            cout << data[i][j] << " ";
+    for (int y = 0 ; y < getHauteur(); y++) {
+        for (int x = 0; x < getLargeur(); x++) {
+            cout << getPixel(x, y) << " ";
         }
         cout << endl;
     }
@@ -117,11 +117,11 @@ void PGM::ecrireFichier(char *nom_fichier) {
     ofstream myfile;
     myfile.open(nom_fichier);
     myfile << "P2" << endl;
-    myfile << largeur << " " << hauteur << endl;
-    myfile << valeurMax << endl;
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            myfile << data[i][j] << " ";
+    myfile << getLargeur() << " " << getHauteur() << endl;
+    myfile << getValeurMax() << endl;
+    for (int y = 0; y < getHauteur(); y++) {
+        for (int x = 0; x < getLargeur(); x++) {
+            myfile << data[y][x] << " ";
         }
         myfile << endl;
     }
@@ -132,41 +132,37 @@ int PGM::getNbImage() {
 }
 
 void PGM::dessinRect(int x1, int y1, int x2, int y2, int val) {
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            if ((i == x1 || i == x2) && (j >= y1 && j <= y2)) {
-                data[i][j] = val;
+    for (int y = y1; y < y2; y++) {
+        for (int x = x1; x < x2; x++) {
+            if ((x == x1 || x == x2) && (y >= y1 && y <= y2)) {
+                setPixel(x, y, val);
             }
-            else if ((j == y1 || j == y2) && (i >= x1 && i <= x2)) {
-                data[i][j] = val;
+            else if ((y == y1 || y == y2) && (x >= x1 && x <= x2)) {
+                setPixel(x, y, val);
             }
         }
     }
 }
 
 void PGM::dessinLigne(int x1, int x2, int line, int val) {
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            if (i == line && (j >= x1 && j <= x2)) {
-                data[i][j] = val;
+    for (int i = x1; i <= x2; i++) {
+        setPixel(i, line, val);
+    }
+}
+
+
+void PGM::dessinCroix(int x0, int y0, int val, int size) {
+    for (int y = y0-size; y < y0+size; y++) {
+        for (int x = x0-size; x < x0+size; x++) {
+            if (x == x0 && (y >= y0-size && y <= y0+size)) {
+                setPixel(x, y, val);
+            } else if (y == y0 && (x >= x0-size && x <= x0+size)) {
+                setPixel(x, y, val);
             }
         }
     }
 }
 
-void PGM::dessinCroix(int x, int y, int val) {
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            if (data[i][j] == valeurMin) {
-                if (i == x && (j >= y-1 && j <= y+1)) {
-                    data[i][j] = valeurMax;
-                } else if (j == y && (i >= x-1 && i <= x+1)) {
-                    data[i][j] = valeurMax;
-                }
-            }
-        }
-    }
-}
 
 void PGM::lectureFichier(char* nom_fichier) {
     ifstream monfichier;
@@ -179,9 +175,9 @@ void PGM::lectureFichier(char* nom_fichier) {
         s >> largeur >> hauteur;
         s >> valeurMax;
         initImage();
-        for (int i = 0; i < largeur; i++) {
-            for (int j = 0; j < hauteur; j++) {
-                s >> data[i][j];
+        for (int y = 0; y < getHauteur(); y++) {
+            for (int x = 0; x < getLargeur(); x++) {
+                s >> data[y][x];
             }
         }
     }
@@ -189,43 +185,50 @@ void PGM::lectureFichier(char* nom_fichier) {
 }
 
 void PGM::seuil(int seuil) {
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
-            if (data[i][j] > seuil) {
-                data[i][j] = valeurMax;
+    for (int y = 0; y < getLargeur(); y++) {
+        for (int x = 0; x < getHauteur(); x++) {
+            if (getPixel(x, y) > seuil) {
+                setPixel(x, y, valeurMax);
             } else {
-                data[i][j] = 0;
+                setPixel(x, y, 0);
             }
         }
     }
 }
 
-void PGM::flue(int centerX, int centerY, int size) {
+void PGM::flue(int size) {
     PGM* newPgm = new PGM(*this);
 
     int average;
-    for (int i = centerX-size; i < centerX+size; i++) {
-        for (int j = centerY-size; j < centerY+size; j++) {
-            average = getMoyenne(i, j, size, newPgm);
-            cout << average << endl;
-            data[i][j] = average;
+    for (int y = 0; y < getHauteur(); y++) {
+        for (int x = 0; x < getLargeur(); x++) {
+            average = newPgm->getAverage(x, y, size, newPgm);
+            setPixel(x, y, average);
         }
     }
 }
 
-int PGM::getMoyenne(int centerX, int centerY, int size, PGM* newPgm) {
+int PGM::getAverage(int centerX, int centerY, int size, PGM* newPgm) {
     int nbMoyenne = 0;
     int pixelAverage = 0;
-    for (int i=centerX-size; i < centerX+size; i++) {
-        for (int j=centerY-size; i < centerY+size; i++) {
-            if (i > 0 && i < newPgm->getLargeur() && j > 0 && j < newPgm->getHauteur()) {
-                pixelAverage+=newPgm->data[i][j];
+    for (int y=centerY-size; y < centerY+size; y++) {
+        for (int x=centerX-size; x < centerX+size; x++) {
+            if (x >= 0 && x < newPgm->getLargeur() && y >= 0 && y < newPgm->getHauteur()) {
+                pixelAverage+=newPgm->getPixel(x, y);
                 nbMoyenne++;
             }
         }
     }
-    if (nbMoyenne) {
+    if (nbMoyenne != 0) {
         return pixelAverage/nbMoyenne;
     }
     return pixelAverage;
+}
+
+int PGM::getPixel(int x, int y) {
+    return data[y][x];
+}
+
+void PGM::setPixel(int x, int y, int val) {
+    data[y][x] = val;
 }

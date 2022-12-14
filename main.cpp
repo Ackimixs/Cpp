@@ -6,9 +6,11 @@ int main() {
 
     pgm.lectureFichier("lena.pgm");
 
-    pgm.flue(120, 200, 10);
+    pgm.ecrireFichier("lena2.pgm");
 
-    pgm.ecrireFichier("new.pgm");
+    pgm.flue(7);
+
+    pgm.ecrireFichier("floue.pgm");
 
     //pgm.ecrireFichier("test.pgm");
 

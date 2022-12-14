@@ -8,7 +8,7 @@
 #ifndef IMAGE_PGM_H
 #define IMAGE_PGM_H
 
-
+//IMPORTANT utilisation des coordonée en base cartésienne => (x,y) => (colonne, ligne) donc data[y][x]
 class PGM {
 private:
     int largeur;
@@ -62,15 +62,20 @@ public:
 
     void dessinLigne(int x1, int x2, int line, int val);
 
-    void dessinCroix(int x, int y, int val);
+    void dessinCroix(int x0, int y0, int val, int size = 1);
 
     void lectureFichier(char* nom_fichier);
 
     void seuil(int seuil);
 
-    void flue(int centerX, int centerY, int size);
+    void flue(int size);
 
-    int getMoyenne(int centerX, int centerY, int size, PGM* newPgm);
+    int getAverage(int centerX, int centerY, int size, PGM* newPgm);
+    //int getAverage(int centerX, int centerY, int size);
+
+    int getPixel(int x, int y);
+
+    void setPixel(int x, int y, int val);
 };
 
 
