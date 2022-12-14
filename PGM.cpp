@@ -2,9 +2,7 @@
 // Created by acki on 12/13/22.
 //
 
-#include <cstdlib>
-#include <ctime>
-#include <sstream>
+
 #include "PGM.h"
 
 using namespace std;
@@ -53,7 +51,7 @@ void PGM::creeImage(int minpx, int maxpx) {
     }
 }
 
-PGM::PGM() : largeur(0), hauteur(0), valeurMax(0), data(nullptr) {
+PGM::PGM() : largeur(0), hauteur(0), valeurMax(0), valeurMin(0), data(nullptr) {
     nbImage++;
 }
 
@@ -71,17 +69,17 @@ void PGM::setValeurMin(int valeurMin) {
 }
 
 void PGM::initImage() {
-    data = new int*[largeur];
-    for (int i = 0; i < largeur; i++) {
-        data[i] = new int[hauteur];
+    data = new int*[getHauteur()];
+    for (int y = 0; y < getHauteur(); y++) {
+        data[y] = new int[getLargeur()];
     }
 
     **data = {0};
 }
 
 void PGM::supprImage() {
-    for (int i = 0; i < largeur; i++) {
-        delete[] data[i];
+    for (int y = 0; y < getHauteur(); y++) {
+        delete[] data[y];
     }
     delete[] data;
 }
@@ -145,8 +143,8 @@ void PGM::dessinRect(int x1, int y1, int x2, int y2, int val) {
 }
 
 void PGM::dessinLigne(int x1, int x2, int line, int val) {
-    for (int i = x1; i <= x2; i++) {
-        setPixel(i, line, val);
+    for (int x = x1; x <= x2; x++) {
+        setPixel(x, line, val);
     }
 }
 
@@ -196,7 +194,7 @@ void PGM::seuil(int seuil) {
     }
 }
 
-void PGM::flue(int size) {
+void PGM::floue(int size) {
     PGM* newPgm = new PGM(*this);
 
     int average;
@@ -231,4 +229,58 @@ int PGM::getPixel(int x, int y) {
 
 void PGM::setPixel(int x, int y, int val) {
     data[y][x] = val;
+}
+
+void PGM::filtrerImage(int k) {
+    PGM* newPgm = new PGM(*this);
+
+    int median;
+    for (int y = 0; y < getHauteur(); y++) {
+        for (int x = 0; x < getLargeur(); x++) {
+            median = newPgm->getMedian(x, y, k);
+            setPixel(x, y, median);
+        }
+    }
+}
+
+int PGM::getMedian(int x0, int y0, int size) {
+    int* array = new int[size*size];
+    int i;
+    for (int y = y0-((int) size/2); y < y0+((int) size/2); y++) {
+        i = 0;
+        for (int x = x0 - ((int) size/2); x < x0 + ((int) size/2); x++) {
+            if (x >= 0 && x < getLargeur() && y >= 0 && y < getHauteur()) {
+                array[i] = getPixel(x, y);
+                i++;
+            }
+        }
+    }
+
+    selectionSort(array, i);
+
+    int nb = array[(int) ceil(i/2)];
+
+    delete[] array;
+
+    return nb;
+}
+
+void PGM::selectionSort(int* array, int size) {
+    int key, j;
+    for (int i = 1; i < size; i++) {
+        key = array[i];
+        j = i - 1;
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
+            j--;
+        }
+        array[j + 1] = key;
+    }
+}
+
+void PGM::printArray(int *array, int size) {
+    for (int i = 0; i < size; i++) {
+        cout << array[i] << " ";
+    }
+    cout << endl;
 }

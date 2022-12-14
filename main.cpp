@@ -1,18 +1,12 @@
-#include "PGM.h"
+#include "PPM.h"
 
 int main() {
 
-    PGM pgm;
+    PPM image;
 
-    pgm.lectureFichier("lena.pgm");
+    image.lectureFichier("myImage.ppm");
 
-    pgm.ecrireFichier("lena2.pgm");
-
-    pgm.flue(7);
-
-    pgm.ecrireFichier("floue.pgm");
-
-    //pgm.ecrireFichier("test.pgm");
+    image.ecrireFichier("myImage1.ppm");
 
     return 0;
 }
