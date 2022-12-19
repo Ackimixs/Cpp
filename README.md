@@ -1,3 +1,3 @@
-# Cpp - tp4
+# Cpp - tp5
 
-TP4 : Manipulation des images PGM
+TP5 - revision

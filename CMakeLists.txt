@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
-project(image)
+project(tp5)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(image main.cpp PGM.h PGM.cpp PPM.cpp)
+add_executable(tp5 main.cpp Rational.cpp TraficLight.cpp)
