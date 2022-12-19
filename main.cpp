@@ -1,25 +1,16 @@
-#include "TraficLight.h"
-#include "Rational.h"
+#include "Vehicule.h"
 
 int main() {
 
-    Rational r1(2, 6);
-    Rational r2(1, 3);
+    Point pos(0, 10);
 
-    Rational r3 = r1.multiply(r2);
+    char identifier[] = "ML-888-VK";
 
-    Rational r5 = r1 * r2;
+    Vehicule vehicule(pos, identifier);
 
-    std::cout << r1.equals(r2) << std::endl;
+    float distance = vehicule.moveTo(10, 10);
 
-    r3.print();
+    vehicule.print();
 
-    r5.print();
-
-    Rational r4 = r1 + r2;
-
-    r4.print();
-
-
-    return 0;
+    std::cout << "Distance : " << distance << std::endl;
 }

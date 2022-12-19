@@ -1,3 +1,3 @@
-# Cpp - tp5
+# Cpp - tp6
 
-TP5 - revision
+TP6 - Composition
