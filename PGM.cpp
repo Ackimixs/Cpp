@@ -44,8 +44,8 @@ void PGM::setData(int **data) {
 void PGM::creeImage(int minpx, int maxpx) {
     srand (time(NULL));
 
-    for (int i = 0; i < largeur; i++) {
-        for (int j = 0; j < hauteur; j++) {
+    for (int i = 0; i < getHauteur(); i++) {
+        for (int j = 0; j < getLargeur(); j++) {
             data[i][j] = rand() % (maxpx - minpx) + minpx;
         }
     }
