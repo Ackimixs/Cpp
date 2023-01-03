@@ -18,6 +18,11 @@ public:
 
     void setX(int x);
     void setY(int y);
+
+    void setPoint(int x, int y);
+
+    float distance(const Point& p) const;
+    float distance(int x, int y) const;
 };
 
 

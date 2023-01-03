@@ -3,4 +3,4 @@ project(tp6)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(tp6 main.cpp Point.cpp Vehicule.cpp)
+add_executable(tp6 main.cpp Point.cpp Poney.cpp Foin.cpp)
