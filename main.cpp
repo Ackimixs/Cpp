@@ -1,12 +1,12 @@
-#include "PPM.h"
+#include "PGM.h"
 
 int main() {
 
-    PPM image;
+    PGM image;
 
-    image.lectureFichier("myImage.ppm");
+    image.lectureFichier("lena.pgm");
 
-    image.ecrireFichier("myImage1.ppm");
+    image.ecrireFichier("myImage1.pgm");
 
     return 0;
 }

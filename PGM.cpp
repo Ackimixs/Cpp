@@ -245,9 +245,8 @@ void PGM::filtrerImage(int k) {
 
 int PGM::getMedian(int x0, int y0, int size) {
     int* array = new int[size*size];
-    int i;
+    int i = 0;
     for (int y = y0-((int) size/2); y < y0+((int) size/2); y++) {
-        i = 0;
         for (int x = x0 - ((int) size/2); x < x0 + ((int) size/2); x++) {
             if (x >= 0 && x < getLargeur() && y >= 0 && y < getHauteur()) {
                 array[i] = getPixel(x, y);
