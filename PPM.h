@@ -14,14 +14,19 @@ using namespace std;
 #ifndef IMAGE_PPM_H
 #define IMAGE_PPM_H
 
-// ATTENTION : format PPM de wikipedia rgb en colonne alors que celui GIMP en ligne ???
+typedef struct {
+    int r;
+    int g;
+    int b;
+} Pixel;
+
 class PPM {
 private:
     int largeur;
     int hauteur;
     int valeurMin;
     int valeurMax;
-    int ***data;
+    Pixel **data;
 public:
     static int nbImage;
 
@@ -34,13 +39,13 @@ public:
     int getHauteur() const;
     int getValeurMax() const;
     int getValeurMin() const;
-    int ***getData() const;
+    Pixel **getData() const;
 
     void setLargeur(int largeur);
     void setHauteur(int hauteur);
     void setValeurMax(int valeurMax);
     void setValeurMin(int valeurMin);
-    void setData(int ***data);
+    void setData(Pixel **data);
 
     void initImage();
     void supprImage();
@@ -54,6 +59,20 @@ public:
     void dessinerCroix(int x0, int y0, int r, int g, int b, int size = 1);
 
     static int getNbImage();
+
+    void floue(int size);
+
+    int getAverage(int centerX, int centerY, int size, PPM* newPpm);
+
+    Pixel getPixel(int x, int y);
+
+    void setPixel(int x, int y, Pixel pixel);
+
+    void filtrerImage(int k);
+
+    Pixel getMedian(int x0, int y0, int size);
+
+    void selectionSort(int* array, int size);
 };
 
 
