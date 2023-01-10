@@ -22,10 +22,12 @@ public:
 
     int getQuantity() const;
 
-    void manger(int quantity);
+    bool manger(int quantity);
     void remplir(int quantity);
 
     void print() const;
+
+    void reset();
 };
 
 

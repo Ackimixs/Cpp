@@ -50,12 +50,16 @@ void poneyMoveTests(){
 
 int main() {
 
-    Foin* foin = new Foin(10);
 
-    Poney* p1 = new Poney("Twilight", Point(0,0), foin);
+    Poney* p1 = new Poney("Twilight", Point(0,0));
 
-    p1->getFoin()->print();
+    Poney* p2 = new Poney("Spike", Point(0,10));
 
+    p1->getFoin()->remplir(10);
+
+    std::cout << p1->moveTo(*p2) << std::endl;
+
+    p1->print();
 
     return 0;
 }

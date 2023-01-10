@@ -1,9 +1,5 @@
-//
-// Created by acki on 1/3/23.
-//
-
 #include "Foin.h"
-
+#include "Poney.h"
 
 Foin::Foin() : quantity(0) {}
 Foin::Foin(int quantity) : quantity(quantity) {}
@@ -14,14 +10,17 @@ int Foin::getQuantity() const {
     return this->quantity;
 }
 
-void Foin::manger(int quantity) {
+bool Foin::manger(int quantity) {
     if (quantity < 0) {
-        throw std::invalid_argument("quantity must be positive");
+        std::cout << "quantity must be positive" << std::endl;
+        return false;
     }
     if (quantity > this->quantity) {
-        throw std::invalid_argument("quantity must be less than the quantity of foin");
+        std::cout << "Oh no you don't have enough wheat" << std::endl;
+        return false;
     }
     this->quantity -= quantity;
+    return true;
 }
 
 void Foin::remplir(int quantity) {
@@ -33,4 +32,8 @@ void Foin::remplir(int quantity) {
 
 void Foin::print() const {
     std::cout << "Foin: " << this->quantity << std::endl;
+}
+
+void Foin::reset() {
+    this->quantity = 0;
 }

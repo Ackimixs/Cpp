@@ -16,6 +16,7 @@ private:
     Foin* foin;
 public:
     Poney();
+    Poney(int x, int y);
     Poney(char* identifier, Point position);
     Poney(char* identifier, Point position, Foin* foin);
     Poney(Poney const &p);

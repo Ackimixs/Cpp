@@ -1,14 +1,11 @@
 #include "Poney.h"
+#include "Foin.h"
 
-Poney::Poney() : position(0, 0) {
-    this->identifier = new char[10];
-    strcpy(this->identifier, "");
-}
+Poney::Poney() : Poney("Hello World", {0, 0}, new Foin()) {}
 
-Poney::Poney(char* identifier, Point position) : position(position) {
-    this->identifier = new char[strlen(identifier) + 1];
-    strcpy(this->identifier, identifier);
-}
+Poney::Poney(int x, int y) : Poney("Hello World", {x, y}, new Foin()) {}
+
+Poney::Poney(char* identifier, Point position) : Poney(identifier, position, new Foin()) {}
 
 Poney::Poney(char *identifier, Point position, Foin *foin) : position(position), foin(foin) {
     this->identifier = new char[strlen(identifier) + 1];
@@ -18,6 +15,7 @@ Poney::Poney(char *identifier, Point position, Foin *foin) : position(position),
 Poney::Poney(Poney const &p) : position(p.position) {
     this->identifier = new char[strlen(p.identifier) + 1];
     strcpy(this->identifier, p.identifier);
+    this->foin = p.foin;
 }
 
 Poney::~Poney() {
@@ -53,26 +51,34 @@ void Poney::setFoin(Foin *foin) {
 float Poney::moveTo(Point p) {
     float distance = this->position.distance(p);
     this->position = p;
+    this->foin->manger((int) distance);
     return distance;
 }
 
 float Poney::moveTo(Poney &p) {
     float distance = this->position.distance(p.position);
     this->position = p.position;
+    this->foin->manger((int) distance);
     return distance;
 }
 
 float Poney::moveTo(int x, int y) {
     float distance = this->position.distance(x, y);
-    this->position.setPoint(x, y);
-    return distance;
+    bool valid = this->foin->manger((int) (distance / 2));
+    if (valid) {
+        this->position.setPoint(x, y);
+        return distance;
+    }
+    return 0;
 }
 
 void Poney::print() const {
     std::cout << "[" << this->identifier << "] position : (" << this->position.getX() << ", " << this->position.getY() << ")" << std::endl;
+    this->foin->print();
 }
 
 void Poney::reset() {
     this->position.setPoint(0, 0);
-    strcpy(this->identifier, "");
+    strcpy(this->identifier, "Hello World");
+    this->foin->reset();
 }
