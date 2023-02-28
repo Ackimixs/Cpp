@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
-project(tp5)
+project(tp7)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 
-add_executable(tp5 main.cpp Rational.cpp TraficLight.cpp)
+add_executable(tp7 main.cpp Point.cpp array.h Personnage.h)
