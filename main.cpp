@@ -36,7 +36,7 @@ void printVectorTest() {
 }
 
 bool isNumber(std::string str) {
-    for (auto c : str) {
+    for (char c : str) {
         if (!std::isdigit(c)) {
             return false;
         }
@@ -53,7 +53,7 @@ void isNumberTests(){
 
 void keepNumbersOnly(std::vector<std::string>& s) {
     for (auto i = s.begin(); i != s.end(); i++) {
-        if (!isNumber(*i)) {
+        if (isNumber(*i)) {
             s.erase(i);
             i--;
         }
@@ -66,8 +66,8 @@ void filterVectorTest(){
     printVector(values);
 }
 
-std::vector<std::string> splitString(std::string s, std::string c = " ") {
-
+std::vector<std::string> splitString(std::string s, char c = ' ') {
+/*
     // Test1
     char i = c[0];
 
@@ -77,23 +77,30 @@ std::vector<std::string> splitString(std::string s, std::string c = " ") {
     for (auto ch: s) {
         if (ch == i) {
             res.push_back(temp);
-            temp = "";
+            temp.clear();
         } else {
-            temp += ch;
+            temp.push_back(ch);
         }
     }
 
     return res;
+*/
+    std::vector<std::string> res;
+    if (s.find(c) == std::string::npos) return {s};
 
-    // TODO Test2
+    while (s.find(c) != std::string::npos) {
+        res.push_back(s.substr(0, s.find(c)));
+        s = s.substr(s.find(c) + 1);
+    }
+    return res;
 }
 
 void splitTests(){
     std::vector<std::string> operators = splitString("+ - / =");
     printVector(operators);
-    std::vector<std::string> numbers = splitString("1,2,3,4,5", ",");
+    std::vector<std::string> numbers = splitString("1,2,3,4,5", ',');
     printVector(numbers);
-    std::vector<std::string> letters = splitString("A-B-C-D", "-");
+    std::vector<std::string> letters = splitString("A-B-C-D", '-');
     printVector(letters);
 }
 
@@ -190,14 +197,12 @@ void splitMapTest() {
         avg += value;
     }
 
-    avg /= values.size();
-
-    return {{"average", avg}, {"max", max}, {"min", min}};
+    return {{"average", avg / values.size()}, {"max", max}, {"min", min}};
 }*/
 
 std::map<std::string, float> computeStatistics(std::vector<int>& values) {
     return {
-        {"average", std::accumulate(values.begin(), values.end(), 0)},
+        {"average", std::accumulate(values.begin(), values.end(), 0) / values.size()},
         {"max", *std::max_element(values.begin(), values.end())},
         {"min", *std::min_element(values.begin(), values.end())}
     };
@@ -217,7 +222,7 @@ int main() {
 
     // filterVectorTest();
 
-    // splitTests();
+    splitTests();
 
     // printAges();
 
@@ -227,7 +232,7 @@ int main() {
 
     // splitMapTest();
 
-    statsTest();
+    // statsTest();
 
     return 0;
 }
