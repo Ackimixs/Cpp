@@ -1,7 +1,5 @@
 # Cpp - tp7b
 
-You can choose with branch witch TP you want to see.
-
 [tp1](https://github.com/Ackimixs/cpp/tree/tp1)  
   
 [tp2](https://github.com/Ackimixs/cpp/tree/tp2)  
