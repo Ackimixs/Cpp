@@ -86,12 +86,13 @@ std::vector<std::string> splitString(std::string s, char c = ' ') {
     return res;
 */
     std::vector<std::string> res;
-    if (s.find(c) == std::string::npos) return {s};
 
     while (s.find(c) != std::string::npos) {
         res.push_back(s.substr(0, s.find(c)));
         s = s.substr(s.find(c) + 1);
     }
+    res.push_back(s);
+
     return res;
 }
 
