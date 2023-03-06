@@ -2,7 +2,6 @@
 #define TP6_POINT_H
 
 #include <iostream>
-#include <cstring>
 #include <cmath>
 
 class Point {
@@ -23,6 +22,8 @@ public:
 
     float distance(const Point& p) const;
     float distance(int x, int y) const;
+
+    void afficher() const;
 };
 
 

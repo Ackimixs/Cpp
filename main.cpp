@@ -1,65 +1,73 @@
-#include "Poney.h"
-#include "Foin.h"
+#include "Vehicule.h"
 
-void PoneyIdTest() {
-    Point position(0,10);
-    char identifier[] = "Fluttershy la poneyte";
-    Poney poney(identifier, position);
-    poney.print(); // affichage 1
-    const char * retrieveId = poney.getIdentifier();
-    //retrieveId[0] = 'B';
-    poney.print(); // affichage 2
+void displayTests1(){
+
+    Vehicule vehicule("CC-987-JU", Point(5,6), 50, 5.3);
+    VehiculeGaz gasVehicule("XY-358-PQ", Point(25,3), 60, 6.8, 95);
+
+    VehiculeDiesel dieselVehicule("HD-888-ZY", Point(2,10), 40, 5.5, true);
 }
 
-void poneyIdTest2() {
-    Point position(0,10);
-    char identifier[] = "Rainbow dash";
-    Poney poney(identifier, position);
-    poney.print(); // affichage 1
-    identifier[0] = 'X';
-    poney.print(); // affichage 2
+void displayTests2(){
+
+    Vehicule vehicle("CC-987-JU", Point(5,6), 50, 5.3);
+    vehicle.affichage();
+
+    std::cout << std::endl;
+
+    VehiculeGaz gasVehicle("XY-358-PQ", Point(25,3), 60, 6.8, 95);
+    gasVehicle.affichage();
+
+    VehiculeDiesel dieselVehicle("HD-888-ZY", Point(2,10), 40, 5.5, true);
+    dieselVehicle.affichage();
 }
 
-void poneyCopyTest(){
-    Poney p1("Rarity", Point(0,0));
-    Poney p2 = p1;
-    p1.setIdentifier("Twilight");
-    p1.print();
-    p2.print();
+void consumptionTests(){
+    VehiculeDiesel dieselVehicle("XY-358-PQ", Point(2,10), 8, 5, false);
+    std::cout << "*******" << std::endl;
+    float traveletDist1 = dieselVehicle.moveTo(0, 100);
+    std::cout << "Traveled distance: " << traveletDist1 << std::endl;
+    dieselVehicle.affichage();
+    std::cout << "*******" << std::endl;
+    float traveletDist2 = dieselVehicle.moveTo(0, 200);
+    std::cout << "Traveled distance : " << traveletDist2 << std::endl;
+    dieselVehicle.affichage();
 }
 
-void poneyMoveTests(){
-    Poney p1("Twilight", Point(0,0));
-    Poney p2("Spike", Point(0,10));
-    Point p = p1.getPosition();
-    float distance = 0;
-    distance = p1.moveTo(p2);
-    std::cout << "distance : " << distance << std::endl; // affichage 1
-    p1.print(); // affichage 2
-    p.setY(50);
-    std::cout << p.getY();
-    p1.print(); // affichage 3
-    distance = p1.moveTo(p);
-    std::cout << "distance : " << distance << std::endl; // affichage 4
-    p1.print(); // affichage 5
-    distance = p1.moveTo(0, 80);
-    std::cout << "distance : " << distance << std::endl; // affichage 6
-    p1.print(); // affichage 7
-    p2.print(); // affichage 8
+void testHiterence() {
+    VehiculeDiesel v1("VehiculeDiesel", 1, 2, 3, 4, true);
+    VehiculeGaz v2("VehiculeGas", 5, 7, 4, 2, 5);
+
+    v1.setPosition(Point(5, 5));
+    v1.setFiltreAParticule(false);
+    v1.setConsommation(10);
+    v1.setQtCarburant(40);
+
+    std::cout << v1.getFiltreAParticule() << std::endl << v1.getConsommation() << std::endl << v1.getName() << std::endl << v1.getQtCarburant() << std::endl;
 }
 
 int main() {
+/*
+    Point p1(4, 6);
 
+    VehiculeDiesel v1("VehiculeDiesel", 1, 2, 3, 4, true);
 
-    Poney* p1 = new Poney("Twilight", Point(0,0));
+    VehiculeDiesel v2(v1);
 
-    Poney* p2 = new Poney("Spike", Point(0,10));
+    v2.setPosition(p1);
 
-    p1->getFoin()->remplir(10);
+    v2.affichage();
 
-    std::cout << p1->moveTo(*p2) << std::endl;
+    VehiculeGaz v3("VehiculeGas", 5, 7, 4, 2, 5);
 
-    p1->print();
+    v3.affichage();
+*/
+
+    // testHiterence();
+
+    // displayTests2();
+
+    consumptionTests();
 
     return 0;
 }

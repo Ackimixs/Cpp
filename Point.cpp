@@ -9,16 +9,16 @@ int Point::getY() const {
 }
 
 void Point::setX(int x) {
-    if (x < 0) {
+    /*if (x < 0) {
         throw std::invalid_argument("x must be positive");
-    }
+    }*/
     this->x = x;
 }
 
 void Point::setY(int y) {
-    if (y < 0) {
+    /*if (y < 0) {
         throw std::invalid_argument("y must be positive");
-    }
+    }*/
     this->y = y;
 }
 
@@ -43,4 +43,8 @@ float Point::distance(const Point& p) const {
 
 float Point::distance(int x, int y) const {
     return sqrt(pow(this->x - x, 2) + pow(this->y - y, 2));
+}
+
+void Point::afficher() const {
+    std::cout << "position : " << "(" << this->x << ", " << this->y << ")";
 }
