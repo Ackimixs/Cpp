@@ -1,77 +1,55 @@
-#include <map>
 #include "Vehicule.h"
-#include <list>
-#include <algorithm>
+#include <iostream>
+#include <vector>
 
-void displayTests1(){
-
-    Vehicule vehicule("CC-987-JU", Point(5,6), 50, 5.3);
-    VehiculeGaz gasVehicule("XY-358-PQ", Point(25,3), 60, 6.8, 95);
-
-    VehiculeDiesel dieselVehicule("HD-888-ZY", Point(2,10), 40, 5.5, true);
+void gasVehicleCopyTest(){
+     VehiculeGaz original("XY-358-PQ", Point(25,3), 60, 6.8, 95);
+     VehiculeGaz copy = original;
+     original.setIdentifier("XXX");
+     original.affichage();
+     copy.affichage();
 }
 
-void displayTests2(){
-
-    Vehicule vehicle("CC-987-JU", Point(5,6), 50, 5.3);
-    vehicle.affichage();
-
-    std::cout << std::endl;
-
-    VehiculeGaz gasVehicle("XY-358-PQ", Point(25,3), 60, 6.8, 95);
-    gasVehicle.affichage();
-
-    VehiculeDiesel dieselVehicle("HD-888-ZY", Point(2,10), 40, 5.5, true);
-    dieselVehicle.affichage();
+void dieselVehicleDestructionTest() {
+     VehiculeDiesel* dieselVehicle = new VehiculeDiesel("HD-888-ZY", Point(2, 10), 40, 5.5, true);
+     Vehicule* vehicle = dieselVehicle; // upcast
+     delete vehicle;
 }
 
-void consumptionTests(){
-    VehiculeDiesel dieselVehicle("XY-358-PQ", Point(2,10), 8, 5, false);
-    std::cout << "*******" << std::endl;
-    float traveletDist1 = dieselVehicle.moveTo(0, 100);
-    std::cout << "Traveled distance: " << traveletDist1 << std::endl;
-    dieselVehicle.affichage();
-    std::cout << "*******" << std::endl;
-    float traveletDist2 = dieselVehicle.moveTo(0, 200);
-    std::cout << "Traveled distance : " << traveletDist2 << std::endl;
-    dieselVehicle.affichage();
+void octaneRatingConsumptionTests(){
+    VehiculeGaz gasVehicle95("XY-358-PQ", Point(0,0), 30, 5, 95);
+    std::cout << "Traveled distance : " << gasVehicle95.moveTo(0, 100) << std::endl;
+    gasVehicle95.affichage();
+    VehiculeGaz gasVehicle98("HD-888-ZY", Point(0,0), 30, 5, 98);
+    std::cout << "Traveled distance : " << gasVehicle98.moveTo(0, 100) << std::endl;
+    gasVehicle98.affichage();
 }
 
-void testHiterence() {
-    VehiculeDiesel v1("VehiculeDiesel", 1, 2, 3, 4, true);
-    VehiculeGaz v2("VehiculeGas", 5, 7, 4, 2, 5);
-
-    v1.setPosition(Point(5, 5));
-    v1.setFiltreAParticule(false);
-    v1.setConsommation(10);
-    v1.setQtCarburant(40);
-
-    std::cout << v1.getFiltreAParticule() << std::endl << v1.getConsommation() << std::endl << v1.getName() << std::endl << v1.getQtCarburant() << std::endl;
+void octaneRatingConsumptionTestsWithUpcast2(std::vector<Vehicule*> &vehicles){
+    for (auto vehicle : vehicles) {
+        std::cout << "Traveled distance : " << vehicle->moveTo(0, 100) << std::endl;
+        vehicle->affichage();
+        std::cout << std::endl;
+    }
 }
+
+void octaneRatingConsumptionTestsWithUpcast(){
+    VehiculeGaz gasVehicle95("XY-358-PQ", Point(0,0), 30, 5, 95);
+    VehiculeGaz gasVehicle98("HD-888-ZY", Point(0,0), 30, 5, 98);
+    std::vector<Vehicule*> vehicles = { &gasVehicle95, &gasVehicle98 };
+    octaneRatingConsumptionTestsWithUpcast2(vehicles);
+}
+
+
 
 int main() {
-/*
-    Point p1(4, 6);
+    //gasVehicleCopyTest();
 
-    VehiculeDiesel v1("VehiculeDiesel", 1, 2, 3, 4, true);
+    // dieselVehicleDestructionTest();
 
-    VehiculeDiesel v2(v1);
+    // octaneRatingConsumptionTests();
 
-    v2.setPosition(p1);
-
-    v2.affichage();
-
-    VehiculeGaz v3("VehiculeGas", 5, 7, 4, 2, 5);
-
-    v3.affichage();
-*/
-
-    // testHiterence();
-
-    // displayTests2();
-
-    consumptionTests();
-
+    octaneRatingConsumptionTestsWithUpcast();
 
     return 0;
 }

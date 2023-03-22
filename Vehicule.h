@@ -18,9 +18,11 @@ public:
     Vehicule() : name("Vehicule"), position(0, 0), qtCarburant(0), consommation(0) {};
     Vehicule(std::string name, Point position, float qtCarburant, float consommation) : name(name), position(position), qtCarburant(qtCarburant), consommation(consommation) {};
     Vehicule(std::string name, int x, int y, float qtCarburant, float consommation) : name(name), position(x, y), qtCarburant(qtCarburant), consommation(consommation) {};
-    Vehicule(Vehicule const &v) : name(v.name), position(v.position), qtCarburant(v.qtCarburant), consommation(v.consommation) {};
+    Vehicule(Vehicule const &v) : name(v.name), position(v.position), qtCarburant(v.qtCarburant), consommation(v.consommation) {
+        std::cout << "Vehicule(Vehicule const &v) " << this << std::endl;
+    };
 
-    ~Vehicule() {
+    virtual ~Vehicule() {
         // std::cout << "Destruction de Vehicule" << std::endl;
     };
 
@@ -72,6 +74,10 @@ public:
     float moveTo(int x, int y) {
         return moveTo(Point(x, y));
     };
+
+    void setIdentifier(std::string identifier) {
+        this->name = std::move(identifier);
+    }
 };
 
 class VehiculeDiesel : public Vehicule {
@@ -81,9 +87,11 @@ public:
     VehiculeDiesel() : Vehicule() {};
     VehiculeDiesel(std::string name, Point position, float qtCarburant, float consommation, bool filtreAParticule) : Vehicule(name, position, qtCarburant, consommation), filtreAParticule(filtreAParticule) {};
     VehiculeDiesel(std::string name, int x, int y, float qtCarburant, float consommation, bool filtreAParticule) : Vehicule(name, x, y, qtCarburant, consommation), filtreAParticule(filtreAParticule) {};
-    VehiculeDiesel(VehiculeDiesel const &v) : Vehicule(v), filtreAParticule(v.filtreAParticule){}
+    VehiculeDiesel(VehiculeDiesel const &v) : Vehicule(v), filtreAParticule(v.filtreAParticule) {
+        std::cout << "VehiculeDiesel(VehiculeDiesel const &v) " << this << std::endl;
+    };
 
-    ~VehiculeDiesel() {
+    virtual ~VehiculeDiesel() {
         // std::cout << "Destruction de VehiculeDiesel" << std::endl;
     };
 
@@ -102,11 +110,17 @@ private:
     int tauxOctane;
 public:
     VehiculeGaz() : Vehicule() {};
-    VehiculeGaz(std::string name, Point position, float qtCarburant, float consommation, int tauxOctane) : Vehicule(name, position, qtCarburant, consommation), tauxOctane(tauxOctane) {};
+    VehiculeGaz(std::string name, Point position, float qtCarburant, float consommation, int tauxOctane) : Vehicule(name, position, qtCarburant, consommation), tauxOctane(tauxOctane) {
+        if (tauxOctane > 95) {
+            this->consommation = consommation * (tauxOctane - 1) / 100;
+        };
+    };
     VehiculeGaz(std::string name, int x, int y, float qtCarburant, float consommation, int tauxOctane) : Vehicule(name, x, y, qtCarburant, consommation), tauxOctane(tauxOctane) {};
-    VehiculeGaz(VehiculeGaz const &v) : Vehicule(v), tauxOctane(v.tauxOctane) {};
+    VehiculeGaz(VehiculeGaz const &v) : Vehicule(v), tauxOctane(v.tauxOctane) {
+        std::cout << "VehiculeGaz(VehiculeGaz const &v) " << this << std::endl;
+    };
 
-    ~VehiculeGaz() {
+    virtual ~VehiculeGaz() {
         // std::cout << "Destruction de VehiculeGaz" << std::endl;
     };
 
