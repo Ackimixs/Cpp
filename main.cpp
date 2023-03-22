@@ -1,4 +1,7 @@
+#include <map>
 #include "Vehicule.h"
+#include <list>
+#include <algorithm>
 
 void displayTests1(){
 
@@ -68,6 +71,7 @@ int main() {
     // displayTests2();
 
     consumptionTests();
+
 
     return 0;
 }
