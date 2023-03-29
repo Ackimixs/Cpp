@@ -17,16 +17,16 @@ int Point::getY() const {
 }
 
 void Point::setX(int x) {
-    /*if (x < 0) {
-        throw std::invalid_argument("x must be positive");
-    }*/
+    if (x < 0) {
+        throw NegativeDimensionException(__CONTEXT__, "x", x);
+    }
     this->x = x;
 }
 
 void Point::setY(int y) {
-    /*if (y < 0) {
-        throw std::invalid_argument("y must be positive");
-    }*/
+    if (y < 0) {
+        throw NegativeDimensionException(__CONTEXT__, "y", y);
+    }
     this->y = y;
 }
 
@@ -36,14 +36,8 @@ void Point::setPoint(int x, int y) {
 }
 
 Point::Point(int x, int y) {
-    if (x < 0) {
-        throw NegativeDimensionException(__CONTEXT__, "x", x);
-    }
-    if (y < 0) {
-        throw NegativeDimensionException(__CONTEXT__, "y", y);
-    }
-    setX(x);
-    setY(y);
+    this->setX(x);
+    this->setY(y);
 }
 
 Point::Point(Point const &p) {
